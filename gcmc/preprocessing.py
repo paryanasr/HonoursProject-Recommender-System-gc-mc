@@ -3,7 +3,7 @@ from __future__ import print_function
 
 import numpy as np
 import scipy.sparse as sp
-import cPickle as pkl
+import pickle as pkl
 import os
 import h5py
 import pandas as pd
