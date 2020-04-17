@@ -13,11 +13,11 @@ import scipy.sparse as sp
 
 import json
 
-from gcmc.preprocessing import create_trainvaltest_split, \
+from preprocessing import create_trainvaltest_split, \
     sparse_to_tuple, preprocess_user_item_features, globally_normalize_bipartite_adjacency
-from gcmc.model import RecommenderGAE
-from gcmc.utils import construct_feed_dict
-from gcmc.data_utils import data_iterator
+from model import RecommenderGAE
+from utils import construct_feed_dict
+from data_utils import data_iterator
 
 
 # Set random seed
