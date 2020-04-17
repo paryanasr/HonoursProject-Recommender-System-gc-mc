@@ -13,7 +13,7 @@ from data_utils import load_data, map_data, download_dataset
 
 
 def normalize_features(feat):
-
+    print("PARYA, normalize_features FUNCTION")
     degree = np.asarray(feat.sum(1)).flatten()
 
     # set zeros to inf to avoid dividing by zero
@@ -26,7 +26,6 @@ def normalize_features(feat):
     if feat_norm.nnz == 0:
         print('ERROR: normalized adjacency matrix has only zero entries!!!!!')
         exit
-
     return feat_norm
 
 
