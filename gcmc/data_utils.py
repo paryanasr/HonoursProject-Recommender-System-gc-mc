@@ -15,54 +15,6 @@ from StringIO import StringIO
 import shutil
 import os.path
 
-
-def data_iterator(data, batch_size):
-    """
-    A simple data iterator from https://indico.io/blog/tensorflow-data-inputs-part1-placeholders-protobufs-queues/
-    :param data: list of numpy tensors that need to be randomly batched across their first dimension.
-    :param batch_size: int, batch_size of data_iterator.
-    Assumes same first dimension size of all numpy tensors.
-    :return: iterator over batches of numpy tensors
-    """
-    print("PARYA, data_iterator(data, batch_size) FUNCTION")
-
-    # shuffle labels and features
-    max_idx = len(data[0])
-    idxs = np.arange(0, max_idx)
-    np.random.shuffle(idxs)
-    shuf_data = [dat[idxs] for dat in data]
-
-    # Does not yield last remainder of size less than batch_size
-    for i in range(max_idx//batch_size):
-        data_batch = [dat[i*batch_size:(i+1)*batch_size] for dat in shuf_data]
-        yield data_batch
-
-
-def map_data(data):
-    """
-    Map data to proper indices in case they are not in a continues [0, N) range
-
-    Parameters
-    ----------
-    data : np.int32 arrays
-
-    Returns
-    -------
-    mapped_data : np.int32 arrays
-    n : length of mapped_data
-
-    """
-    print("PARYA, map_data(data) FUNCTION")
-
-    uniq = list(set(data))
-
-    id_dict = {old: new for new, old in enumerate(sorted(uniq))}
-    data = np.array(map(lambda x: id_dict[x], data))
-    n = len(uniq)
-
-    return data, id_dict, n
-
-
 def download_dataset(dataset, files, data_dir):
     """ Downloads dataset if files are not present. """
     print("PARYA, download_dataset(dataset, files, data_dir) FUNCTION")
@@ -88,6 +40,55 @@ def download_dataset(dataset, files, data_dir):
             shutil.copy(f, destination)
 
         shutil.rmtree(target_dir)
+
+def map_data(data):
+    """
+    Map data to proper indices in case they are not in a continues [0, N) range
+
+    Parameters
+    ----------
+    data : np.int32 arrays
+
+    Returns
+    -------
+    mapped_data : np.int32 arrays
+    n : length of mapped_data
+
+    """
+    print("PARYA, map_data(data) FUNCTION")
+
+    uniq = list(set(data))
+
+    id_dict = {old: new for new, old in enumerate(sorted(uniq))}
+    data = np.array(map(lambda x: id_dict[x], data))
+    n = len(uniq)
+
+    return data, id_dict, n
+
+def data_iterator(data, batch_size):
+    """
+    A simple data iterator from https://indico.io/blog/tensorflow-data-inputs-part1-placeholders-protobufs-queues/
+    :param data: list of numpy tensors that need to be randomly batched across their first dimension.
+    :param batch_size: int, batch_size of data_iterator.
+    Assumes same first dimension size of all numpy tensors.
+    :return: iterator over batches of numpy tensors
+    """
+    print("PARYA, data_iterator(data, batch_size) FUNCTION")
+
+    # shuffle labels and features
+    max_idx = len(data[0])
+    idxs = np.arange(0, max_idx)
+    np.random.shuffle(idxs)
+    shuf_data = [dat[idxs] for dat in data]
+
+    # Does not yield last remainder of size less than batch_size
+    for i in range(max_idx//batch_size):
+        data_batch = [dat[i*batch_size:(i+1)*batch_size] for dat in shuf_data]
+        yield data_batch
+
+
+
+
 
 
 def load_data(fname, seed=1234, verbose=True):
