@@ -24,6 +24,8 @@ def data_iterator(data, batch_size):
     Assumes same first dimension size of all numpy tensors.
     :return: iterator over batches of numpy tensors
     """
+    print("PARYA, data_iterator(data, batch_size) FUNCTION")
+
     # shuffle labels and features
     max_idx = len(data[0])
     idxs = np.arange(0, max_idx)
@@ -50,6 +52,8 @@ def map_data(data):
     n : length of mapped_data
 
     """
+    print("PARYA, map_data(data) FUNCTION")
+
     uniq = list(set(data))
 
     id_dict = {old: new for new, old in enumerate(sorted(uniq))}
@@ -61,6 +65,7 @@ def map_data(data):
 
 def download_dataset(dataset, files, data_dir):
     """ Downloads dataset if files are not present. """
+    print("PARYA, download_dataset(dataset, files, data_dir) FUNCTION")
 
     if not np.all([os.path.isfile(data_dir + f) for f in files]):
         url = "http://files.grouplens.org/datasets/movielens/" + dataset.replace('_', '-') + '.zip'
@@ -123,6 +128,7 @@ def load_data(fname, seed=1234, verbose=True):
         For datashuffling seed with pythons own random.shuffle, as in CF-NADE.
 
     """
+    print("PARYA, load_data(fname, seed=1234, verbose=True) FUNCTION")
 
     u_features = None
     v_features = None
