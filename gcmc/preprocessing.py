@@ -38,6 +38,7 @@ def load_matlab_file(path_file, name_field):
     warning:
         '.mat' files should be saved in the '-v7.3' format
     """
+    print("PARYA, load_matlab_file(path_file, name_field) FUNCTION")
     db = h5py.File(path_file, 'r')
     ds = db[name_field]
     try:
@@ -60,7 +61,7 @@ def preprocess_user_item_features(u_features, v_features):
     Creates one big feature matrix out of user features and item features.
     Stacks item features under the user features.
     """
-
+    print("PARYA, preprocess_user_item_features(u_features, v_features) FUNCTION")
     zero_csr_u = sp.csr_matrix((u_features.shape[0], v_features.shape[1]), dtype=u_features.dtype)
     zero_csr_v = sp.csr_matrix((v_features.shape[0], u_features.shape[1]), dtype=v_features.dtype)
 
@@ -72,7 +73,7 @@ def preprocess_user_item_features(u_features, v_features):
 
 def globally_normalize_bipartite_adjacency(adjacencies, verbose=False, symmetric=True):
     """ Globally Normalizes set of bipartite adjacency matrices """
-
+    print("PARYA, globally_normalize_bipartite_adjacency(adjacencies, verbose=False, symmetric=True) FUNCTION")
     if verbose:
         print('Symmetrically normalizing bipartite adj')
     # degree_u and degree_v are row and column sums of adj+I
@@ -105,6 +106,7 @@ def sparse_to_tuple(sparse_mx):
     """ change of format for sparse matrix. This format is used
     for the feed_dict where sparse matrices need to be linked to placeholders
     representing sparse matrices. """
+    print("PARYA, sparse_to_tuple(sparse_mx) FUNCTION")
 
     if not sp.isspmatrix_coo(sparse_mx):
         sparse_mx = sparse_mx.tocoo()
@@ -122,6 +124,7 @@ def create_trainvaltest_split(dataset, seed=1234, testing=False, datasplit_path=
     For each split computes 1-of-num_classes labels. Also computes training
     adjacency matrix.
     """
+    print("PARYA, create_trainvaltest_split(dataset, seed=1234, testing=False, datasplit_path=None, datasplit_from_file=False, verbose=True) FUNCTION")
 
     if datasplit_from_file and os.path.isfile(datasplit_path):
         print('Reading dataset splits from file...')
@@ -201,6 +204,7 @@ def load_data_monti(dataset, testing=False):
     """
     Loads data from Monti et al. paper.
     """
+    print("PARYA, load_data_monti(dataset, testing=False) FUNCTION")
 
     path_dataset = 'data/' + dataset + '/training_test_dataset.mat'
 
@@ -328,6 +332,7 @@ def load_official_trainvaltest_split(dataset, testing=False):
     For each split computes 1-of-num_classes labels. Also computes training
     adjacency matrix. Assumes flattening happens everywhere in row-major fashion.
     """
+    print("PARYA, load_official_trainvaltest_split(dataset, testing=False) FUNCTION")
 
     sep = '\t'
 
